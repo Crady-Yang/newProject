@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+$app_domain = env('APP_DOMAIN','oauth.app');
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'domain'    =>  $app_domain,
+    'namespace' =>  'Auth',
+],function(){
+    Route::post('login', 'LoginController@loginPass'); //用户登录
+    Route::post('register', 'RegisterController@register'); //用户注册获取token
 });
+
+
+
